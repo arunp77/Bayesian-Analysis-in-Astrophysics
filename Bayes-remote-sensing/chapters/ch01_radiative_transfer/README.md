@@ -82,12 +82,12 @@ level contributes B(ν, T(p)) weighted by how much radiation escapes to space.
 
 The **weighting function** (or Jacobian for temperature) is:
 
-$$K_T(\nu, p) = \frac{\partial I_\text{TOA}(\nu)}{\partial T(p)} = \frac{\partial B(\nu, T(p))}{\partial T}\, \frac{\partial t(\nu, p)}{\partial p}$$
+$$K_T(\nu, p) = \frac{\partial I_\text{TOA}(\nu)}{\partial T(p)} = \frac{\partial B(\nu, T(p))}{\partial T} \frac{\partial t(\nu, p)}{\partial p}$$
 
 This tells us: *"if temperature at pressure level p changes by 1 K, how much does
 the TOA radiance at channel ν change?"*
 
-Key insight: $K_T(\nu, p)$ peaks where $\partial t/\partial p$ is large — i.e., where $\tau \approx 1$.
+Key insight: $K_T(\nu, p)$ peaks where $\partial t/\partial p$ is large, i.e., where $\tau \approx 1$.
 
 **The vertical sounding principle:** By measuring at many spectral channels with
 different absorption strengths, we probe different altitude layers:
@@ -108,11 +108,11 @@ reflected sunlight:
 $$R_\text{TOA} = R_\text{atm}(\theta_s, \theta_v, \phi) + \frac{T_\downarrow \cdot T_\uparrow \cdot R_s}{1 - S \cdot R_s}$$
 
 where:
-- R_atm = path reflectance from atmospheric scattering (Rayleigh + aerosol)
-- T↓, T↑ = downwelling and upwelling transmittances
-- R_s = surface reflectance
+- $R_\text{atm}$ = path reflectance from atmospheric scattering (Rayleigh + aerosol)
+- $T_\downarrow$, $T_\uparrow$ = downwelling and upwelling transmittances
+- $R_s$ = surface reflectance
 - S = atmospheric spherical albedo (accounts for multiple reflections)
-- θ_s, θ_v, φ = solar zenith, view zenith, relative azimuth angles
+- $\theta_s$, $\theta_v$, $\phi$ = solar zenith, view zenith, relative azimuth angles
 
 This is the **surface-atmosphere decoupling** problem: measuring R_TOA, we want
 to separate the atmospheric contribution (dominated by aerosols) from the surface.
