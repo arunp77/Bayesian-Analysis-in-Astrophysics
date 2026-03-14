@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans, sans-serif); background: transparent; }
+
+  .hero {
+    padding: 28px 0 8px;
+    text-align: center;
+  }
+  .hero-title {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    letter-spacing: -0.3px;
+  }
+  .hero-sub {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin-top: 6px;
+  }
+
+  .repo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 14px auto 0;
+    padding: 7px 14px;
+    border: 1px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-lg);
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    background: var(--color-background-secondary);
+    cursor: pointer;
+  }
+  .repo-badge:hover { border-color: var(--color-border-primary); color: var(--color-text-primary); }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #3B8BD4; }
+  .dot.green { background: #639922; }
+
+  .chapters-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 20px 0;
+  }
+
+  .ch-card {
+    border: 1px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--color-background-primary);
+    position: relative;
+    overflow: hidden;
+  }
+  .ch-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 12px 12px 0 0;
+  }
+  .ch-card.purple::before { background: #7F77DD; }
+  .ch-card.teal::before { background: #1D9E75; }
+  .ch-card.coral::before { background: #D85A30; }
+  .ch-card.blue::before { background: #378ADD; }
+  .ch-card.amber::before { background: #BA7517; }
+  .ch-card.pink::before { background: #D4537E; }
+  .ch-card.green::before { background: #639922; }
+  .ch-card.gray::before { background: #888780; }
+
+  .ch-card:hover {
+    border-color: var(--color-border-secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .ch-card.active {
+    border-color: var(--color-border-primary);
+  }
+
+  .ch-num {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .ch-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    line-height: 1.35;
+    margin-bottom: 8px;
+  }
+  .ch-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .tag {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 400;
+  }
+  .tag.purple { background: #EEEDFE; color: #3C3489; }
+  .tag.teal   { background: #E1F5EE; color: #0F6E56; }
+  .tag.coral  { background: #FAECE7; color: #993C1D; }
+  .tag.blue   { background: #E6F1FB; color: #185FA5; }
+  .tag.amber  { background: #FAEEDA; color: #854F0B; }
+  .tag.pink   { background: #FBEAF0; color: #993556; }
+  .tag.green  { background: #EAF3DE; color: #3B6D11; }
+  .tag.gray   { background: #F1EFE8; color: #5F5E5A; }
+
+  @media (prefers-color-scheme: dark) {
+    .tag.purple { background: #26215C; color: #AFA9EC; }
+    .tag.teal   { background: #04342C; color: #5DCAA5; }
+    .tag.coral  { background: #4A1B0C; color: #F0997B; }
+    .tag.blue   { background: #042C53; color: #85B7EB; }
+    .tag.amber  { background: #412402; color: #EF9F27; }
+    .tag.pink   { background: #4B1528; color: #ED93B1; }
+    .tag.green  { background: #173404; color: #97C459; }
+    .tag.gray   { background: #2C2C2A; color: #B4B2A9; }
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--color-border-tertiary);
+    margin: 4px 0 16px;
+  }
+
+  .project-card {
+    border: 1px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-lg);
+    padding: 18px 20px;
+    background: var(--color-background-secondary);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .project-card:hover { border-color: var(--color-border-primary); }
+
+  .project-title { font-size: 15px; font-weight: 500; color: var(--color-text-primary); }
+  .project-desc { font-size: 12px; color: var(--color-text-secondary); margin-top: 4px; line-height: 1.5; }
+
+  .project-chips {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: flex-end;
+  }
+  .chip {
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    background: var(--color-background-primary);
+    border: 1px solid var(--color-border-tertiary);
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+  }
+
+  .flow-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 16px 0 8px;
+    flex-wrap: wrap;
+  }
+  .flow-node {
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--color-border-tertiary);
+    color: var(--color-text-secondary);
+    background: var(--color-background-primary);
+    white-space: nowrap;
+  }
+  .flow-arrow {
+    color: var(--color-text-tertiary);
+    font-size: 12px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-title">🌌 Bayesian Analysis in Astrophysics</div>
+  <div class="hero-sub">8-chapter curriculum · 1 capstone project · Full GitHub repo</div>
+  <div class="repo-badge" onclick="sendPrompt('Show me the git repo structure and how to push it to GitHub')">
+    <span class="dot"></span>
+    <span>git init complete · 16 files · 1,756 insertions</span>
+    <span class="dot green"></span>
+    <span>Ready to push</span>
+  </div>
+</div>
+
+<div class="section-label">Curriculum — 8 Chapters</div>
+<div class="chapters-grid">
+  <div class="ch-card purple" onclick="sendPrompt('Tell me more about Chapter 1: Probability Foundations')">
+    <div class="ch-num">Chapter 01</div>
+    <div class="ch-title">Probability Foundations</div>
+    <div class="ch-tags">
+      <span class="tag purple">Kolmogorov axioms</span>
+      <span class="tag purple">Poisson</span>
+      <span class="tag purple">Gaussian</span>
+      <span class="tag purple">CLT</span>
+    </div>
+  </div>
+  <div class="ch-card teal" onclick="sendPrompt('Tell me more about Chapter 2: Bayes Theorem')">
+    <div class="ch-num">Chapter 02</div>
+    <div class="ch-title">Bayes' Theorem</div>
+    <div class="ch-tags">
+      <span class="tag teal">Posterior</span>
+      <span class="tag teal">Prior</span>
+      <span class="tag teal">Likelihood</span>
+      <span class="tag teal">Conjugate priors</span>
+    </div>
+  </div>
+  <div class="ch-card coral" onclick="sendPrompt('Tell me more about Chapter 3: Likelihood and Priors')">
+    <div class="ch-num">Chapter 03</div>
+    <div class="ch-title">Likelihood & Priors</div>
+    <div class="ch-tags">
+      <span class="tag coral">Gaussian noise</span>
+      <span class="tag coral">Poisson likelihood</span>
+      <span class="tag coral">Jeffreys prior</span>
+      <span class="tag coral">Marginalisation</span>
+    </div>
+  </div>
+  <div class="ch-card blue" onclick="sendPrompt('Tell me more about Chapter 4: MCMC Methods')">
+    <div class="ch-num">Chapter 04</div>
+    <div class="ch-title">MCMC Methods</div>
+    <div class="ch-tags">
+      <span class="tag blue">Metropolis-Hastings</span>
+      <span class="tag blue">emcee</span>
+      <span class="tag blue">HMC</span>
+      <span class="tag blue">Convergence</span>
+    </div>
+  </div>
+  <div class="ch-card amber" onclick="sendPrompt('Tell me more about Chapter 5: Nested Sampling')">
+    <div class="ch-num">Chapter 05</div>
+    <div class="ch-title">Nested Sampling</div>
+    <div class="ch-tags">
+      <span class="tag amber">Evidence Z</span>
+      <span class="tag amber">dynesty</span>
+      <span class="tag amber">MultiNest</span>
+      <span class="tag amber">Prior volume</span>
+    </div>
+  </div>
+  <div class="ch-card pink" onclick="sendPrompt('Tell me more about Chapter 6: Bayesian Model Comparison')">
+    <div class="ch-num">Chapter 06</div>
+    <div class="ch-title">Model Comparison</div>
+    <div class="ch-tags">
+      <span class="tag pink">Bayes factor</span>
+      <span class="tag pink">AIC / BIC</span>
+      <span class="tag pink">Occam's razor</span>
+      <span class="tag pink">WAIC</span>
+    </div>
+  </div>
+  <div class="ch-card green" onclick="sendPrompt('Tell me more about Chapter 7: Gaussian Processes')">
+    <div class="ch-num">Chapter 07</div>
+    <div class="ch-title">Gaussian Processes</div>
+    <div class="ch-tags">
+      <span class="tag green">Kernels</span>
+      <span class="tag green">GP regression</span>
+      <span class="tag green">celerite</span>
+      <span class="tag green">Hyperparameters</span>
+    </div>
+  </div>
+  <div class="ch-card gray" onclick="sendPrompt('Tell me more about Chapter 8: Hierarchical Models')">
+    <div class="ch-num">Chapter 08</div>
+    <div class="ch-title">Hierarchical Models</div>
+    <div class="ch-tags">
+      <span class="tag gray">Hyperpriors</span>
+      <span class="tag gray">Shrinkage</span>
+      <span class="tag gray">PyMC</span>
+      <span class="tag gray">Population inference</span>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section-label">Capstone Project</div>
+<div class="project-card" onclick="sendPrompt('Start the exoplanet transit analysis project — let us begin Chapter 1 first')">
+  <div>
+    <div class="project-title">🪐 Exoplanet Transit Light Curve Analysis</div>
+    <div class="project-desc">Fit the Mandel-Agol transit model to TESS photometry of WASP-39b using full Bayesian inference — MCMC parameter estimation, GP noise modelling for stellar variability, nested sampling for model comparison, and hierarchical analysis across multiple transits.</div>
+  </div>
+  <div class="project-chips">
+    <span class="chip">batman + emcee</span>
+    <span class="chip">dynesty evidence</span>
+    <span class="chip">celerite GP</span>
+    <span class="chip">TESS data</span>
+    <span class="chip">4-week plan</span>
+  </div>
+</div>
+
+<div class="section-label" style="margin-top: 18px;">Learning path</div>
+<div class="flow-row">
+  <span class="flow-node">Probability</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-node">Bayes' theorem</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-node">Likelihood & priors</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-node">MCMC</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-node">Nested sampling</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-node">Model comparison</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-node">GPs</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-node">Hierarchical</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-node" style="border-color: #1D9E75; color: #0F6E56;">Exoplanet project</span>
+</div>
+
+</body>
+</html>

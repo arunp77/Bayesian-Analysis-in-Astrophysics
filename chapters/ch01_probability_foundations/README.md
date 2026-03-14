@@ -30,17 +30,21 @@ An **event** A is any subset A ⊆ Ω.
 All of probability theory rests on three axioms (Kolmogorov, 1933):
 
 **Axiom 1 (Non-negativity):**
+
 $$P(A) \geq 0 \quad \forall A \subseteq \Omega$$
 
 **Axiom 2 (Normalization):**
+
 $$P(\Omega) = 1$$
 
 **Axiom 3 (Countable Additivity):** For mutually exclusive events $A_1, A_2, \ldots$:
+
 $$P\!\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i)$$
 
 From these three axioms, *all* of probability theory follows deductively.
 
 **Derived results:**
+
 $$P(\emptyset) = 0$$
 $$P(A^c) = 1 - P(A)$$
 $$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
@@ -64,11 +68,13 @@ Applying conditional probability repeatedly:
 $$P(A \cap B) = P(A \mid B) \cdot P(B)$$
 
 For $n$ events:
+
 $$P(A_1 \cap A_2 \cap \cdots \cap A_n) = P(A_1) \cdot P(A_2 \mid A_1) \cdot P(A_3 \mid A_1, A_2) \cdots$$
 
 ### 1.4.2 Independence
 
 Events A and B are **independent** if:
+
 $$P(A \cap B) = P(A) \cdot P(B) \iff P(A \mid B) = P(A)$$
 
 Knowing B gives *no information* about A.
@@ -96,15 +102,18 @@ A **random variable** X is a function X: Ω → ℝ that maps outcomes to real n
 X takes countable values $\{x_1, x_2, \ldots\}$.
 
 The **probability mass function (PMF)**:
+
 $$p(x_k) = P(X = x_k)$$
 
 Properties:
+
 $$p(x_k) \geq 0, \qquad \sum_k p(x_k) = 1$$
 
 **Key discrete distributions in astrophysics:**
 
 #### Poisson Distribution
 For photon counting, radioactive decay, cosmic ray hits:
+
 $$\boxed{P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}, \quad k = 0, 1, 2, \ldots}$$
 
 where λ > 0 is the expected count rate. Properties:
@@ -114,6 +123,7 @@ where λ > 0 is the expected count rate. Properties:
 
 #### Binomial Distribution
 For binary outcomes (detection/non-detection):
+
 $$P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}$$
 
 Mean: np, Variance: np(1-p)
@@ -121,15 +131,18 @@ Mean: np, Variance: np(1-p)
 ### 1.6.2 Continuous Random Variables
 
 X takes values in an interval. The **probability density function (PDF)** f(x) satisfies:
+
 $$P(a \leq X \leq b) = \int_a^b f(x)\, dx$$
 
 Properties:
+
 $$f(x) \geq 0, \qquad \int_{-\infty}^{\infty} f(x)\, dx = 1$$
 
 **Key continuous distributions in astrophysics:**
 
 #### Gaussian (Normal) Distribution
 The workhorse of measurement uncertainty:
+
 $$\boxed{f(x \mid \mu, \sigma) = \frac{1}{\sigma\sqrt{2\pi}} \exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)}$$
 
 Parameters: mean μ, standard deviation σ.  
@@ -137,12 +150,14 @@ Notation: X ~ N(μ, σ²)
 
 #### Multivariate Gaussian
 For correlated measurements (e.g., flux and color):
+
 $$f(\mathbf{x} \mid \boldsymbol{\mu}, \boldsymbol{\Sigma}) = \frac{1}{(2\pi)^{d/2}|\boldsymbol{\Sigma}|^{1/2}} \exp\!\left(-\frac{1}{2}(\mathbf{x}-\boldsymbol{\mu})^\top \boldsymbol{\Sigma}^{-1}(\mathbf{x}-\boldsymbol{\mu})\right)$$
 
 where Σ is the **covariance matrix**.
 
 #### Cauchy / Lorentzian Distribution
 Appears in spectral line profiles (natural line broadening):
+
 $$f(x \mid x_0, \gamma) = \frac{1}{\pi\gamma\left[1 + \left(\frac{x-x_0}{\gamma}\right)^2\right]}$$
 
 Note: No finite mean or variance — heavy tails matter in astronomy!
@@ -152,15 +167,19 @@ Note: No finite mean or variance — heavy tails matter in astronomy!
 ## 1.7 Expectation and Moments
 
 The **expectation** (mean) of X:
+
 $$E[X] = \int_{-\infty}^{\infty} x\, f(x)\, dx$$
 
 The **variance**:
+
 $$\text{Var}(X) = E[(X - E[X])^2] = E[X^2] - (E[X])^2$$
 
 The **n-th moment**:
+
 $$\mu_n = E[X^n] = \int_{-\infty}^{\infty} x^n f(x)\, dx$$
 
 **Moment Generating Function (MGF):**
+
 $$M_X(t) = E[e^{tX}]$$
 
 Taking derivatives: $\frac{d^n M_X}{dt^n}\bigg|_{t=0} = E[X^n]$
