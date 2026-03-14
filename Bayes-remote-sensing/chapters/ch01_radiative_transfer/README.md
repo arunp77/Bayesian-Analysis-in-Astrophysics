@@ -68,10 +68,10 @@ observes:
 $$I_\text{TOA}(\nu) = \underbrace{\varepsilon_s B(\nu, T_s)\, t(\nu, p_s)}_\text{surface emission} + \int_{p_s}^{0} B(\nu, T(p))\, \frac{\partial t(\nu,p)}{\partial p}\, dp$$
 
 where:
-- t(ν, p) = exp(−τ(ν, p)) = transmittance from pressure level p to space
-- T_s = surface skin temperature
-- ε_s = surface emissivity
-- T(p) = atmospheric temperature at pressure level p
+- $t(ν, p)$ = exp(−τ(ν, p)) = transmittance from pressure level p to space
+- $T_s$ = surface skin temperature
+- $ε_s$ = surface emissivity
+- $T(p)$ = atmospheric temperature at pressure level p
 
 The integral term is the **atmospheric emission contribution**. Each pressure
 level contributes B(ν, T(p)) weighted by how much radiation escapes to space.
@@ -87,12 +87,12 @@ $$K_T(\nu, p) = \frac{\partial I_\text{TOA}(\nu)}{\partial T(p)} = \frac{\partia
 This tells us: *"if temperature at pressure level p changes by 1 K, how much does
 the TOA radiance at channel ν change?"*
 
-Key insight: K_T(ν, p) peaks where ∂t/∂p is large — i.e., where τ ≈ 1.
+Key insight: $K_T(\nu, p)$ peaks where $\partial t/\partial p$ is large — i.e., where $\tau \approx 1$.
 
 **The vertical sounding principle:** By measuring at many spectral channels with
 different absorption strengths, we probe different altitude layers:
-- Window channel (ν = 900 cm⁻¹): peaks near surface (τ ≈ 0 from above)
-- CO₂ band flank (ν = 680 cm⁻¹): peaks in mid-troposphere
+- Window channel ($\nu = 900$ cm⁻¹): peaks near surface ($\tau \approx 0$ from above)
+- CO₂ band flank ($\nu = 680$ cm⁻¹): peaks in mid-troposphere
 - CO₂ band centre (ν = 667 cm⁻¹): peaks in stratosphere
 
 This is exactly why AIRS has 2378 channels — different channels give independent
