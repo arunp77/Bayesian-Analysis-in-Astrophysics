@@ -32,10 +32,12 @@ Consequences:
 ## 2.2 Derivation of Bayes' Theorem
 
 Start from the definition of conditional probability:
+
 $$P(A \mid B) = \frac{P(A \cap B)}{P(B)}$$
 $$P(B \mid A) = \frac{P(A \cap B)}{P(A)}$$
 
 Both expressions contain $P(A \cap B)$. Equating:
+
 $$P(A \mid B) \cdot P(B) = P(B \mid A) \cdot P(A)$$
 
 Rearranging:
@@ -66,6 +68,7 @@ Each term has a precise name and meaning:
 ## 2.4 The Evidence (Marginal Likelihood)
 
 The denominator:
+
 $$P(D) = \int P(D \mid \theta) \cdot P(\theta)\, d\theta$$
 
 This is the **marginal likelihood** or **Bayesian evidence**. It:
@@ -90,6 +93,7 @@ $$\boxed{P(\theta \mid D) \propto P(D \mid \theta) \cdot P(\theta)}$$
 Is the star variable (θ = 1) or constant (θ = 0)?
 
 **Prior:** 5% of stars of this type are variable.
+
 $$P(\theta = 1) = 0.05, \quad P(\theta = 0) = 0.95$$
 
 **Likelihood** (assuming Gaussian noise, independent measurements):
@@ -107,12 +111,15 @@ Formally: evaluate a variability model vs. constant model — this is worked in 
 A beautiful property of Bayes: **yesterday's posterior is today's prior**.
 
 Start with prior $P_0(\theta)$. After observing datum $d_1$:
+
 $$P_1(\theta) = P(\theta \mid d_1) \propto P(d_1 \mid \theta) \cdot P_0(\theta)$$
 
 After observing $d_2$ (independent of $d_1$):
+
 $$P_2(\theta) = P(\theta \mid d_1, d_2) \propto P(d_2 \mid \theta) \cdot P_1(\theta)$$
 
 This is equivalent to updating on both data at once:
+
 $$P(\theta \mid d_1, d_2) \propto P(d_1 \mid \theta) \cdot P(d_2 \mid \theta) \cdot P_0(\theta)$$
 
 **Application:** Real-time updating of pulsar period as new pulse arrival times come in.
@@ -124,11 +131,13 @@ $$P(\theta \mid d_1, d_2) \propto P(d_1 \mid \theta) \cdot P(d_2 \mid \theta) \c
 Once we have the posterior $P(\theta \mid D)$, we can extract point estimates:
 
 **Maximum A Posteriori (MAP):**
+
 $$\hat{\theta}_{\text{MAP}} = \arg\max_\theta P(\theta \mid D) = \arg\max_\theta \left[\ln P(D \mid \theta) + \ln P(\theta)\right]$$
 
 When the prior is uniform (flat): MAP = Maximum Likelihood Estimate (MLE).
 
 **Posterior Mean:**
+
 $$E[\theta \mid D] = \int \theta \cdot P(\theta \mid D)\, d\theta$$
 
 **Posterior Median:** θ* such that $\int_{-\infty}^{\theta^*} P(\theta \mid D)\, d\theta = 0.5$
@@ -144,6 +153,7 @@ $$E[\theta \mid D] = \int \theta \cdot P(\theta \mid D)\, d\theta$$
 ## 2.8 Credible Intervals
 
 A **Bayesian credible interval** $[a, b]$ at level $1-\alpha$ satisfies:
+
 $$\int_a^b P(\theta \mid D)\, d\theta = 1 - \alpha$$
 
 **Highest Posterior Density (HPD) interval:** The shortest interval containing $1-\alpha$ probability mass. For unimodal, symmetric distributions this coincides with equal-tails.
@@ -153,6 +163,7 @@ $$\text{HPD}: \quad \{\theta : P(\theta \mid D) \geq k_\alpha\}$$
 where $k_\alpha$ is chosen so the region contains $1-\alpha$ probability.
 
 **Example:** Posterior on a black hole mass:
+
 $$M_{\text{BH}} \in [6.8, 9.2]\, M_\odot \quad \text{(90% HPD)}$$
 
 This means: *"Given our model and data, there is 90% probability the true mass lies in [6.8, 9.2] solar masses."*
@@ -179,14 +190,17 @@ This yields **analytic posteriors** — no integration required!
 **Data:** k = 73 injected signals recovered out of n = 100.
 
 **Prior:** $\epsilon \sim \text{Beta}(\alpha_0, \beta_0)$, with:
+
 $$P(\epsilon) = \frac{\epsilon^{\alpha_0-1}(1-\epsilon)^{\beta_0-1}}{B(\alpha_0, \beta_0)}$$
 
 Uninformative choice: $\alpha_0 = \beta_0 = 1$ (uniform on [0,1]).
 
 **Likelihood:** Binomial
+
 $$P(k \mid \epsilon) = \binom{n}{k} \epsilon^k (1-\epsilon)^{n-k}$$
 
 **Posterior:**
+
 $$P(\epsilon \mid k) \propto \epsilon^{k + \alpha_0 - 1}(1-\epsilon)^{n-k+\beta_0-1} = \text{Beta}(\alpha_0 + k,\; \beta_0 + n - k)$$
 
 With uniform prior: $\text{Beta}(74, 28)$
