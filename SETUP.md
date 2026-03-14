@@ -46,7 +46,7 @@ print("All dependencies installed successfully!")
 ## GitHub Setup (for your own fork)
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/bayesian-astrophysics.git
-cd bayesian-astrophysics
-git remote add upstream https://github.com/ORIGINAL/bayesian-astrophysics.git
+git https://github.com/arunp77/Bayesian-Analysis-in-Astrophysics.git
+cd Bayesian-Analysis-in-Astrophysics/
+git remote add upstream https://github.com/arunp77/Bayesian-Analysis-in-Astrophysics.git
 ```
