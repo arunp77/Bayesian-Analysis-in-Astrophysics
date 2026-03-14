@@ -22,3 +22,4 @@ astropy>=5.3           # Astronomy utilities
 tqdm>=4.65             # Progress bars
 arviz>=0.16            # MCMC diagnostics and visualisation
 jupyterlab>=4.0        # Interactive notebooks
+
