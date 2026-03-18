@@ -23,7 +23,7 @@ For a temperature sounding problem:
 $$
 \mathbf{x} =
 \begin{bmatrix}
-T(p_1),\; T(p_2), \ldots, T(p_N), T_s,\varepsilon_s
+T(p_1),T(p_2), \ldots, T(p_N), T_s,\varepsilon_s
 \end{bmatrix}^T \in \mathbb{R}^n
 $$
 
@@ -46,7 +46,7 @@ where:
 - $x_a$ = **a priori** state (from climatology, NWP model, or previous retrieval)
 - $S_a$ = **a priori covariance matrix** (how uncertain we are about each element)
 
-The a priori covariance S_a encodes both:
+The a priori covariance $S_a$ encodes both:
 - **Variances** on the diagonal: σᵢ² = uncertainty in the i-th state element
 - **Correlations** off-diagonal: adjacent atmospheric levels are correlated
 
@@ -58,9 +58,9 @@ Assuming Gaussian instrument noise:
 
     ε ~ N(0, Sε)
 
-where S_ε is the **measurement error covariance matrix**.
+where $S_ε$ is the **measurement error covariance matrix**.
 
-For independent channels: S_ε = diag(σ₁², σ₂², ..., σₘ²)
+For independent channels: $S_ε = \mathrm{diag}(\sigma_1^2, \sigma_2^2, \ldots, \sigma_m^2)$
 
 The log-likelihood is then:
 
@@ -98,9 +98,13 @@ Each row Kᵢ tells us how measurement i responds to changes in all state elemen
 Each column Kⱼ tells us how all measurements respond to changes in state element j.
 
 **Computing K in practice:**
-- Finite differences: K_ij = [F_i(x + δeⱼ) - F_i(x)] / δ  (slow, O(n) forward model calls)
-- Analytic Jacobians: derived from the physics (fast, error-prone to code)
-- Adjoint method: compute K^T v efficiently for any vector v (used in variational data assimilation)
+- Finite differences: 
+
+$$K_{ij} = \frac{[F_i(x + δe_j) - F_i(x)]}{δ}$$
+
+(slow, O(n) forward model calls)
+- **Analytic Jacobians:** derived from the physics (fast, error-prone to code)
+- **Adjoint method:** compute $K^T v$ efficiently for any vector $v$ (used in variational data assimilation)
 
 ---
 
