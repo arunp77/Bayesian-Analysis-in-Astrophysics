@@ -23,7 +23,7 @@ For a temperature sounding problem:
 $$
 \mathbf{x} =
 \begin{bmatrix}
-T(p_1),\; T(p_2),\; \ldots,\; T(p_N),\; T_s,\; \varepsilon_s
+T(p_1),\; T(p_2), \ldots, T(p_N), T_s,\varepsilon_s
 \end{bmatrix}^T \in \mathbb{R}^n
 $$
 
@@ -32,14 +32,14 @@ For an aerosol retrieval:
 $$
 \mathbf{x} =
 \begin{bmatrix}
-\mathrm{AOD}_{550},\; \alpha,\; \omega_0,\; R_s(470\,\mathrm{nm}),\; R_s(550\,\mathrm{nm}),\; R_s(860\,\mathrm{nm})
+\mathrm{AOD}_{550}, \alpha, \omega_0, R_s(470\,\mathrm{nm}), R_s(550\,\mathrm{nm}), R_s(860\,\mathrm{nm})
 \end{bmatrix}^T \in \mathbb{R}^6
 $$
 
 The **prior distribution** encodes our knowledge before the measurement:
 
 $$
-\mathbf{x} \sim \mathcal{N}(\mathbf{x}_a,\; \mathbf{S}_a)
+\mathbf{x} \sim \mathcal{N}(\mathbf{x}_a,\mathbf{S}_a)
 $$
 
 where:
