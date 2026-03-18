@@ -20,19 +20,31 @@ Bayesian inference provides the principled solution through the posterior P(x|y)
 The **atmospheric state vector** x contains everything we want to retrieve.
 For a temperature sounding problem:
 
-    x = [T(p₁), T(p₂), ..., T(pN), T_s, ε_s]ᵀ ∈ ℝⁿ
+$$
+\mathbf{x} =
+\begin{bmatrix}
+T(p_1),\; T(p_2),\; \ldots,\; T(p_N),\; T_s,\; \varepsilon_s
+\end{bmatrix}^T \in \mathbb{R}^n
+$$
 
 For an aerosol retrieval:
 
-    x = [AOD₅₅₀, α, ω₀, R_s(470nm), R_s(550nm), R_s(860nm)]ᵀ ∈ ℝ⁶
+$$
+\mathbf{x} =
+\begin{bmatrix}
+\mathrm{AOD}_{550},\; \alpha,\; \omega_0,\; R_s(470\,\mathrm{nm}),\; R_s(550\,\mathrm{nm}),\; R_s(860\,\mathrm{nm})
+\end{bmatrix}^T \in \mathbb{R}^6
+$$
 
 The **prior distribution** encodes our knowledge before the measurement:
 
-    x ~ N(x_a, S_a)
+$$
+\mathbf{x} \sim \mathcal{N}(\mathbf{x}_a,\; \mathbf{S}_a)
+$$
 
 where:
-- x_a = **a priori** state (from climatology, NWP model, or previous retrieval)
-- S_a = **a priori covariance matrix** (how uncertain we are about each element)
+- $x_a$ = **a priori** state (from climatology, NWP model, or previous retrieval)
+- $S_a$ = **a priori covariance matrix** (how uncertain we are about each element)
 
 The a priori covariance S_a encodes both:
 - **Variances** on the diagonal: σᵢ² = uncertainty in the i-th state element
