@@ -6,6 +6,7 @@ The forward model tells us how to go from atmosphere → measurement.
 The retrieval algorithm goes the other way: measurement → atmosphere.
 
 This is an **ill-posed inverse problem** because:
+
 1. We have fewer measurements than unknown state variables (underdetermined)
 2. Many different atmospheric states can produce the same spectrum (non-unique)
 3. Small measurement errors can produce large errors in the retrieved state
@@ -43,10 +44,12 @@ $$
 $$
 
 where:
+
 - $x_a$ = **a priori** state (from climatology, NWP model, or previous retrieval)
 - $S_a$ = **a priori covariance matrix** (how uncertain we are about each element)
 
 The a priori covariance $S_a$ encodes both:
+
 - **Variances** on the diagonal: σᵢ² = uncertainty in the i-th state element
 - **Correlations** off-diagonal: adjacent atmospheric levels are correlated
 
@@ -62,7 +65,7 @@ where $S_ε$ is the **measurement error covariance matrix**.
 
 For independent channels: $S_ε = \mathrm{diag}(\sigma_1^2, \sigma_2^2, \ldots, \sigma_m^2)$
 
-The log-likelihood is then:
+The log-likelihood is then (equation 57 of CO2 notes):
 
 $$\ln P(y | x) = -\frac{1}{2} [y - F(x)]^T S_\varepsilon^{-1} [y - F(x)] + \text{const}$$
 
@@ -78,7 +81,7 @@ $$P(x | y) \propto P(y | x) \cdot P(x)$$
 
 $$\ln P(x | y) = -\frac{1}{2}\underbrace{[y - F(x)]^T S_\varepsilon^{-1} [y - F(x)]}_\text{misfit to data} -\frac{1}{2}\underbrace{(x - x_a)^T S_a^{-1} (x - x_a)}_\text{penalty from prior} + \text{const}$$
 
-The retrieval minimises the **cost function**:
+The retrieval minimises the **cost function** (equation 59 of the CO2 notes):
 
 $$\boxed{J(x) = [y - F(x)]^T S_\varepsilon^{-1} [y - F(x)] + (x - x_a)^T S_a^{-1} (x - x_a)}$$
 
@@ -90,7 +93,7 @@ departures from the a priori.
 
 ## 2.5 The Jacobian Matrix K
 
-For a forward model F: ℝⁿ → ℝᵐ, the Jacobian is:
+For a forward model F: ℝⁿ → ℝᵐ, the Jacobian is (discussed in subsection 6.4.1):
 
 $$K = \frac{\partial F}{\partial x} \in \mathbb{R}^{m \times n}$$
 
@@ -98,11 +101,13 @@ Each row Kᵢ tells us how measurement i responds to changes in all state elemen
 Each column Kⱼ tells us how all measurements respond to changes in state element j.
 
 **Computing K in practice:**
-- Finite differences: 
+
+- Finite differences:
 
 $$K_{ij} = \frac{[F_i(x + δe_j) - F_i(x)]}{δ}$$
 
 (slow, O(n) forward model calls)
+
 - **Analytic Jacobians:** derived from the physics (fast, error-prone to code)
 - **Adjoint method:** compute $K^T v$ efficiently for any vector $v$ (used in variational data assimilation)
 
@@ -148,12 +153,12 @@ Used to optimally select measurement channels that maximise retrieval informatio
 
 The total retrieval error has contributions:
 
-| Source | Expression | Name |
-|--------|-----------|------|
-| Measurement noise | S_noise = (KᵀSε⁻¹K + Sa⁻¹)⁻¹ KᵀSε⁻¹K Sa | Noise error |
-| Smoothing | S_smooth = (A - I) Sa (A - I)ᵀ | Smoothing error |
-| Forward model | S_FM = G Kb Sb Kbᵀ Gᵀ | Model parameter error |
-| Total | Sₓ = S_noise + S_smooth + S_FM | Total error |
+| Source            | Expression                              | Name                  |
+| ----------------- | --------------------------------------- | --------------------- |
+| Measurement noise | S_noise = (KᵀSε⁻¹K + Sa⁻¹)⁻¹ KᵀSε⁻¹K Sa | Noise error           |
+| Smoothing         | S_smooth = (A - I) Sa (A - I)ᵀ          | Smoothing error       |
+| Forward model     | S_FM = G Kb Sb Kbᵀ Gᵀ                   | Model parameter error |
+| Total             | Sₓ = S_noise + S_smooth + S_FM          | Total error           |
 
 where G = (KᵀSε⁻¹K + Sa⁻¹)⁻¹ KᵀSε⁻¹ is the gain matrix and Kb is
 the Jacobian with respect to model parameters b (e.g., spectroscopic data).
@@ -178,5 +183,6 @@ the Jacobian with respect to model parameters b (e.g., spectroscopic data).
 ---
 
 ## 🔗 Navigation
+
 [← Chapter 1: Radiative Transfer](../ch01_radiative_transfer/README.md)
 [→ Chapter 3: Optimal Estimation](../ch03_optimal_estimation/README.md)
