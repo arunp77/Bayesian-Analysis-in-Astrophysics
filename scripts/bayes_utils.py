@@ -211,6 +211,11 @@ if __name__ == "__main__":
     y_obs = y_true + np.random.normal(0, 1.5, size=len(x))
     sigma = 1.5 * np.ones_like(x)
 
+    # ─── Posterior function ─────────────────────────────────────────────────────
+
+    # m is slope of the line, b is the intercept, log_s is the log of the jitter i.e noise
+    # We use log_s to ensure that s is always positive and log_s is uniform in [-3, 3]
+    # This is equivalent to a log-uniform prior on s in [exp(-3), exp(3)] which is approx [0.05, 20] 
     def log_posterior(theta):
         m, b, log_s = theta
         lp = (log_prior_uniform(m, -10, 10) +
@@ -219,13 +224,34 @@ if __name__ == "__main__":
         if not np.isfinite(lp):
             return -np.inf
         s = np.exp(log_s)
+        # log_likelihood_heteroscedastic(data, model, sigma_obs, sigma_jitter=0.0) 
+        # data = y_obs, model = m * x + b, sigma_obs = sigma, sigma_jitter = s 
         ll = log_likelihood_heteroscedastic(y_obs, m * x + b, sigma, sigma_jitter=s)
         return lp + ll
 
+    # Number of walkers and dimensions 
     nwalkers, ndim = 32, 3
+
+    # Initial positions of the walkers (randomly distributed around the true values) 
+    # True values are m = 2.5, b = 1.0, log_s = 0.0 (starting values for m, b and log_s)
+    # 0.1 is the spread around the true values 
+    # np.random.randn(nwalkers, ndim) generates a matrix of random numbers with shape (nwalkers, ndim) 
+    # and this helps avoid all walkers starting at same place 
     p0 = np.array([2.5, 1.0, 0.0]) + 0.1 * np.random.randn(nwalkers, ndim)
 
+    # ─── MCMC sampling ───────────────────────────────────────────────────────────
+    # nwalkers: number of chains
+    # ndim: number of parameters
+    # log_posterior: function that returns the log-posterior
+    # p0: initial guess for the parameters
+    # 2000: number of steps for the burn-in
+    # 3000: number of steps for the production run
     sampler = emcee.EnsembleSampler(nwalkers, ndim, log_posterior)
+
+    # Run the MCMC sampler
+    # p0: initial guess for the parameters
+    # 2000: number of steps for the burn-in
+    # 3000: number of steps for the production run
     sampler.run_mcmc(p0, 2000, progress=True)
     sampler.reset()
     sampler.run_mcmc(None, 3000, progress=True)
