@@ -90,7 +90,6 @@ We apply every technique from the curriculum to fit a physical model to real pho
 ```bash
 # Clone the repository
 git clone https://github.com/arunp77/Bayesian-statistics.git
-cd bayesian-astrophysics
 
 # Set up the environment
 conda env create -f environment.yml
