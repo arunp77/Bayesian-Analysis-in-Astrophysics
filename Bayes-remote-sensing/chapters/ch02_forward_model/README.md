@@ -111,13 +111,31 @@ $$K_{ij} = \frac{[F_i(x + δe_j) - F_i(x)]}{δ}$$
 - **Analytic Jacobians:** derived from the physics (fast, error-prone to code)
 - **Adjoint method:** compute $K^T v$ efficiently for any vector $v$ (used in variational data assimilation)
 
+**Gain Matrix:**
+
+$$G = (K^T S_\varepsilon^{-1} K + S_a^{-1})^{-1} K^T S_\varepsilon^{-1}$$
+
+In terms of Gain matrix the retrieval is given by:
+
+$$\hat{x} = \mathbf{x}_a + G(\mathbf{y} - F(\mathbf{x}_a))$$
+
+Now linearize the forward model around:
+
+$$F(x) \approx F(x_a) + K(x - x_a)$$
+
+Then we can write the retrieval as:
+
+$$\hat{x} - x_a = A(\hat{x} - x_a) + G\epsilon$$
+
+where A is the averaging kernel matrix and G is the gain matrix.
+
 ---
 
 ## 2.6 Degrees of Freedom for Signal (DFS)
 
-How much independent information does the measurement provide about the state?
+How much independent information does the measurement provide about the state? (equation 63 of CO2 notes)
 
-    A = (KᵀSε⁻¹K + Sa⁻¹)⁻¹ KᵀSε⁻¹K    (Averaging kernel matrix)
+    A = GK = (KᵀSε⁻¹K + Sa⁻¹)⁻¹ KᵀSε⁻¹K    (Averaging kernel matrix)
 
 The **degrees of freedom for signal** (DFS):
 
@@ -186,3 +204,6 @@ the Jacobian with respect to model parameters b (e.g., spectroscopic data).
 
 [← Chapter 1: Radiative Transfer](../ch01_radiative_transfer/README.md)
 [→ Chapter 3: Optimal Estimation](../ch03_optimal_estimation/README.md)
+
+$$
+$$
